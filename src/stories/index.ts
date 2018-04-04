@@ -82,7 +82,7 @@ storiesOf('Components', module)
   @clickClose="clickClose"
   @clickCancel="clickCancel"
   @clickOK="clickOK">
-  Modal
+  {{ content }}
 </vlds-modal>`,
         data: () => ({
           is_show_modal: true,
@@ -94,6 +94,7 @@ storiesOf('Components', module)
             ) || undefined,
           footer_directional: boolean('footer-directional', false),
           size: sizes === '(none)' ? undefined : sizes,
+          content: text('content', 'Content'),
         }),
         methods: {
           clickClose() {
