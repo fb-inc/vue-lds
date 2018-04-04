@@ -3,16 +3,18 @@ import { withInfo } from 'storybook-addon-vue-info'
 import { withKnobs, text, selectV2, boolean } from '@storybook/addon-knobs/vue'
 import { action } from '@storybook/addon-actions'
 
-import { VldsButton } from '../lib'
+import { VldsButton, VldsModal, VldsSpinner } from '../lib'
 
 import Edit from '@salesforce-ux/icons/dist/salesforce-lightning-design-system-icons/utility/edit.svg'
 import Delete from '@salesforce-ux/icons/dist/salesforce-lightning-design-system-icons/utility/delete.svg'
+
+const styles = { styles: { info: { padding: `${8 * 2.5}px` }, header: { h1: { fontSize: `${8 * 3}px` } } } }
 
 storiesOf('Components', module)
   .addDecorator(withKnobs)
   .add(
     'Button',
-    withInfo({ styles: { info: { padding: `${8 * 2.5}px` }, header: { h1: { fontSize: `${8 * 3}px` } } } })(() => {
+    withInfo(styles)(() => {
       const types = selectV2(
         'type',
         {
@@ -34,22 +36,13 @@ storiesOf('Components', module)
         },
         '(none)',
       )
-      const aligns = selectV2(
-        'icon-align',
-        {
-          '(none)': '(none)',
-          left: 'left',
-          right: 'right',
-        },
-        '(none)',
-      )
 
       return {
         components: { VldsButton },
         template: `<vlds-button
   :type="type"
   :icon="icon"
-  :icon-align="icon_align"
+  :right-icon="right_icon"
   :disabled="disabled"
   @click="click">
   {{ label }}
@@ -57,11 +50,55 @@ storiesOf('Components', module)
         data: () => ({
           type: types === '(none)' ? undefined : types,
           icon: icons === '(none)' ? undefined : icons,
-          icon_align: aligns === '(none)' ? undefined : aligns,
+          right_icon: boolean('right-icon', false),
           disabled: boolean('disabled', false),
           label: text('label', 'Button'),
         }),
         methods: { click: () => action('click')('click') },
+      }
+    }),
+  )
+  .add(
+    'Modal',
+    withInfo(styles)(() => {
+      return {
+        components: { VldsModal },
+        template: `<vlds-modal
+  v-if="is_show_modal"
+  @clickCancel="clickCancel"
+  @clickOK="clickOK">
+  Modal
+</vlds-modal>`,
+        data: () => ({ is_show_modal: true }),
+        methods: {
+          clickCancel() {
+            this.is_show_modal = false
+          },
+          clickOK() {
+            this.is_show_modal = false
+          },
+        },
+      }
+    }),
+  )
+  .add(
+    'Spinner',
+    withInfo(styles)(() => {
+      const sizes = selectV2(
+        'size',
+        {
+          'xx-small': 'xx-small',
+          'x-small': 'x-small',
+          small: 'small',
+          medium: 'medium',
+          large: 'large',
+        },
+        'medium',
+      )
+      return {
+        components: { VldsSpinner },
+        template: `<vlds-spinner :size="size" :brand="brand"></vlds-spinner>`,
+        data: () => ({ size: sizes, brand: boolean('brand', false) }),
       }
     }),
   )

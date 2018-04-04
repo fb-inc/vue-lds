@@ -4,12 +4,12 @@
 
 <template lang="pug">
 button.slds-button(:class="{ [`slds-button_${type}`]: type != null }" :disabled="disabled" @click="$listeners.click()")
-  template(v-if="icon != null && (iconAlign == null || iconAlign === 'left')")
-    svg.slds-button__icon.slds-button__icon_left(aria-hidden="true")
+  template(v-if="icon != null && !rightIcon")
+    svg.slds-button__icon.slds-button__icon_right(aria-hidden="true")
       use(:xlink:href="icon")
   slot
-  template(v-if="icon != null && iconAlign === 'right'")
-    svg.slds-button__icon.slds-button__icon_right(aria-hidden="true")
+  template(v-if="icon != null && rightIcon")
+    svg.slds-button__icon.slds-button__icon_left(aria-hidden="true")
       use(:xlink:href="icon")
 </template>
 
@@ -24,8 +24,8 @@ export default class extends Vue {
   @Prop({ type: String })
   icon: string | undefined
 
-  @Prop({ type: String })
-  iconAlign: string | undefined
+  @Prop({ type: Boolean })
+  rightIcon: boolean
 
   @Prop({ type: Boolean })
   disabled: boolean
