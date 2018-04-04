@@ -3,7 +3,7 @@ import { withInfo } from 'storybook-addon-vue-info'
 import { withKnobs, text, selectV2, boolean } from '@storybook/addon-knobs/vue'
 import { action } from '@storybook/addon-actions'
 
-import { VldsButton, VldsModal, VldsSpinner } from '../lib'
+import { VldsButton, VldsForm, VldsInput, VldsModal, VldsSpinner } from '../lib'
 
 import Edit from '@salesforce-ux/icons/dist/salesforce-lightning-design-system-icons/utility/edit.svg'
 import Delete from '@salesforce-ux/icons/dist/salesforce-lightning-design-system-icons/utility/delete.svg'
@@ -53,6 +53,45 @@ storiesOf('Components', module)
           right_icon: boolean('right-icon', false),
           disabled: boolean('disabled', false),
           label: text('label', 'Button'),
+        }),
+        methods: { click: () => action('click')('click') },
+      }
+    }),
+  )
+  .add(
+    'Form',
+    withInfo(styles)(() => {
+      return {
+        components: { VldsForm },
+        template: `<vlds-form :horizontal="horizontal"></vlds-form>`,
+        data: () => ({
+          horizontal: boolean('horizontal', false),
+        }),
+        methods: { click: () => action('click')('click') },
+      }
+    }),
+  )
+  .add(
+    'Input',
+    withInfo(styles)(() => {
+      const states = selectV2(
+        'type',
+        {
+          '(none)': '(none)',
+          static: 'static',
+        },
+        'static',
+      )
+      return {
+        components: { VldsInput },
+        template: `<vlds-input
+  :label="label"
+  v-model="model"
+  :state="state"></vlds-input>`,
+        data: () => ({
+          label: text('label', 'Input Label'),
+          model: text('model', 'Input'),
+          state: states === '(none)' ? undefined : states,
         }),
         methods: { click: () => action('click')('click') },
       }
