@@ -5,11 +5,11 @@
 <template lang="pug">
 button.slds-button(:class="{ [`slds-button_${type}`]: type != null }" :disabled="disabled" @click="$listeners.click()")
   template(v-if="icon != null && !rightIcon")
-    svg.slds-button__icon.slds-button__icon_right(aria-hidden="true")
+    svg.slds-button__icon.slds-button__icon_left(aria-hidden="true")
       use(:xlink:href="icon")
   slot
   template(v-if="icon != null && rightIcon")
-    svg.slds-button__icon.slds-button__icon_left(aria-hidden="true")
+    svg.slds-button__icon.slds-button__icon_right(aria-hidden="true")
       use(:xlink:href="icon")
 </template>
 

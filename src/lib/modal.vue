@@ -6,31 +6,32 @@
 div
   section.slds-modal.slds-fade-in-open(
     :class="{ [`slds-modal_${size}`]: size != null }"
-    ole="dialog"
+    role="dialog"
     tabindex="-1"
     :aria-labelledby="title == null ? undefined : 'modal-heading-01'"
     aria-modal="true"
     aria-describedby="modal-content-id-1"
+    @click="clickSection"
   )
     .slds-modal__container
       header.slds-modal__header(:class="{ 'slds-modal__header_empty': title == null }")
         button.slds-button.slds-button_icon.slds-modal__close.slds-button_icon-inverse(
-          v-if="$listeners.clickClose != null"
+          v-if="closeIcon != null && $listeners.clickClose != null"
           title="Close"
           @click="$listeners.clickClose()"
         )
           svg.slds-button__icon.slds-button__icon_large(aria-hidden="true")
-            use(:xlink:href="close_icon_url")
+            use(:xlink:href="closeIcon")
           span.slds-assistive-text Close
         h2#modal-heading-01.slds-text-heading_medium.slds-hyphenate(v-if="title != null") {{ title }}
         p.slds-m-top_x-small(v-if="taglines != null") {{ taglines }}
       #modal-content-id-1.slds-modal__content.slds-p-around_medium: slot
       footer.slds-modal__footer(
-        v-if="$listeners.clickCancel != null || $listeners.clickOK != null"
+        v-if="$listeners.clickSecondary != null || $listeners.clickPrimary != null"
         :class="{ 'slds-modal__footer_directional': footerDirectional }"
       )
-        vlds-button(v-if="$listeners.clickCancel != null" type="neutral" @click="$listeners.clickCancel()") {{ labelCancel || 'Cancel' }}
-        vlds-button(v-if="$listeners.clickOK != null" type="brand"  @click="$listeners.clickOK()") {{ labelOk || 'OK' }}
+        vlds-button(v-if="$listeners.clickSecondary != null" type="neutral" @click="$listeners.clickSecondary()") {{ labelSecondary || 'Cancel' }}
+        vlds-button(v-if="$listeners.clickPrimary != null" type="brand"  @click="$listeners.clickPrimary()") {{ labelPrimary || 'Done' }}
   .slds-backdrop.slds-backdrop_open
 </template>
 
@@ -41,9 +42,6 @@ import VldsButton from './button.vue'
 
 @Component({ components: { VldsButton } })
 export default class extends Vue {
-  close_icon_url = require('@salesforce-ux/icons/dist/salesforce-lightning-design-system-icons/utility/close.svg')
-    .default.url
-
   @Prop({ type: String })
   title: string | undefined
 
@@ -56,19 +54,34 @@ export default class extends Vue {
   @Prop({ type: String })
   size: string | undefined
 
+  @Prop({ type: String })
+  closeIcon: string | undefined
+
+  @Prop({ type: String })
+  labelSecondary: string | undefined
+
+  @Prop({ type: String })
+  labelPrimary: string | undefined
+
+  @Prop({ type: Function })
+  clickBackdrop: () => void | undefined
+
   @Prop({ type: Function })
   clickClose: () => void | undefined
 
-  @Prop({ type: String })
-  labelCancel: string | undefined
+  @Prop({ type: Function })
+  clickSecondary: () => void | undefined
 
   @Prop({ type: Function })
-  clickCancel: () => void | undefined
+  clickPrimary: () => void | undefined
 
-  @Prop({ type: String })
-  labelOk: string | undefined
-
-  @Prop({ type: Function })
-  clickOK: () => void | undefined
+  clickSection(_: MouseEvent) {
+    if (
+      (_.target as Element).className.split(' ').find(_ => _ === 'slds-modal') &&
+      this.$listeners.clickBackdrop != null
+    ) {
+      ;(this.$listeners.clickBackdrop as Function)()
+    }
+  }
 }
 </script>

@@ -3,7 +3,6 @@
   "description": "Salesforce's Lightning Design System wrapped in Vue.js.",
   "devDependencies": {
     "@salesforce-ux/design-system": "^2.5.2",
-    "@salesforce-ux/icons": "^9.8.0",
     "@storybook/addon-actions": "^3.4.0",
     "@storybook/addon-knobs": "^3.4.0",
     "@storybook/vue": "^4.0.0-alpha.1",
@@ -16,15 +15,13 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
     "poststylus": "^1.0.0",
     "pug": "^2.0.3",
     "storybook-addon-vue-info": "^0.2.0",
     "style-loader": "^0.20.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
-    "svg-sprite-loader": "^3.7.3",
-    "svgo": "^1.0.5",
-    "svgo-loader": "^2.1.0",
     "ts-loader": "^4.1.0",
     "typescript": "^2.8.1",
     "url-loader": "^1.0.1",
@@ -32,7 +29,7 @@
     "vue-loader": "^14.2.2",
     "vue-property-decorator": "^6.0.0",
     "vue-template-compiler": "^2.5.16",
-    "webpack": "^4.4.1",
+    "webpack": "^4.5.0",
     "webpack-build-notifier": "^0.1.23",
     "webpack-cli": "^2.0.13",
     "webpack-merge": "^4.1.2"
@@ -53,5 +50,5 @@
     "production": "rm -dfr ./lib && rm -dfr ./docs && yarn build:lib && yarn build:storybook",
     "storybook": "start-storybook -p 8080"
   },
-  "version": "0.1.6"
+  "version": "0.1.7"
 }

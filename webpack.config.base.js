@@ -2,7 +2,6 @@ const Webpack = require('webpack')
 const BuildNotifier = require('webpack-build-notifier')
 const PostStylus = require('poststylus')
 const Autoprefixer = require('autoprefixer')
-const SpritePlugin = require('svg-sprite-loader/lib/plugin')
 
 module.exports = storybook_base_config_ => {
   return {
@@ -27,20 +26,11 @@ module.exports = storybook_base_config_ => {
             { loader: 'stylus-loader' },
           ],
         },
-        { test: /\.css$/, use: [{ loader: 'style-loader' }, { loader: 'css-loader', options: { modules: true } }] },
         { test: /\.(woff|woff2)$/, use: [{ loader: 'url-loader' }] },
-        {
-          test: /\.svg$/,
-          use: [
-            { loader: 'svg-sprite-loader', options: { extract: true } },
-            { loader: 'svgo-loader', options: { plugins: [{ removeAttrs: { attrs: 'fill' } }] } },
-          ],
-        },
       ],
     },
-    resolve: { extensions: ['.js', '.ts'], alias: { vue: 'vue/dist/vue.js' } },
+    resolve: { extensions: ['.js', '.ts'], alias: { vue: 'vue/dist/vue.esm.js' } },
     plugins: [
-      new SpritePlugin(),
       new Webpack.LoaderOptionsPlugin({
         options: { stylus: { use: [PostStylus([Autoprefixer({ browsers: ['last 2 versions', 'ie >= 11'] })])] } },
       }),

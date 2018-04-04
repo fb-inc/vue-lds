@@ -5,8 +5,7 @@ import { action } from '@storybook/addon-actions'
 
 import { VldsButton, VldsForm, VldsInput, VldsModal, VldsSpinner } from '../lib'
 
-import Edit from '@salesforce-ux/icons/dist/salesforce-lightning-design-system-icons/utility/edit.svg'
-import Delete from '@salesforce-ux/icons/dist/salesforce-lightning-design-system-icons/utility/delete.svg'
+import 'file-loader?name=utility.svg!@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg'
 
 const styles = { styles: { info: { padding: `${8 * 2.5}px` }, header: { h1: { fontSize: `${8 * 3}px` } } } }
 
@@ -31,8 +30,8 @@ storiesOf('Components', module)
         'icon',
         {
           '(none)': '(none)',
-          Edit: Edit.url,
-          Delete: Delete.url,
+          edit: 'utility.svg#edit',
+          delete: 'utility.svg#delete',
         },
         '(none)',
       )
@@ -118,11 +117,13 @@ storiesOf('Components', module)
   :taglines="taglines"
   :footer-directional="footer_directional"
   :size="size"
+  :close-icon="close_icon"
+  :label-secondary="label_secondary"
+  :label-primary="label_primary"
+  @clickBackdrop="clickBackdrop"
   @clickClose="clickClose"
-  :label-cancel="label_cancel"
-  @clickCancel="clickCancel"
-  :label-ok="label_ok"
-  @clickOK="clickOK">
+  @clickSecondary="clickSecondary"
+  @clickPrimary="clickPrimary">
   {{ content }}
 </vlds-modal>`,
         data: () => ({
@@ -135,18 +136,22 @@ storiesOf('Components', module)
             ) || undefined,
           footer_directional: boolean('footer-directional', false),
           size: sizes === '(none)' ? undefined : sizes,
+          close_icon: 'utility.svg#close',
+          label_secondary: text('label-secondary', 'Cancel'),
+          label_primary: text('label-primary', 'Save'),
           content: text('content', 'Content'),
-          label_cancel: text('label-cancel', 'Cancel'),
-          label_ok: text('label-ok', 'Save'),
         }),
         methods: {
+          clickBackdrop() {
+            this.is_show_modal = false
+          },
           clickClose() {
             this.is_show_modal = false
           },
-          clickCancel() {
+          clickSecondary() {
             this.is_show_modal = false
           },
-          clickOK() {
+          clickPrimary() {
             this.is_show_modal = false
           },
         },
