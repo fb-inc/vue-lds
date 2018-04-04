@@ -79,6 +79,7 @@ storiesOf('Components', module)
   :taglines="taglines"
   :footer-directional="footer_directional"
   :size="size"
+  @clickClose="clickClose"
   @clickCancel="clickCancel"
   @clickOK="clickOK">
   Modal
@@ -95,6 +96,9 @@ storiesOf('Components', module)
           size: sizes === '(none)' ? undefined : sizes,
         }),
         methods: {
+          clickClose() {
+            this.is_show_modal = false
+          },
           clickCancel() {
             this.is_show_modal = false
           },

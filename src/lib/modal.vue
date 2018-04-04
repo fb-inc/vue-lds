@@ -14,7 +14,11 @@ div
   )
     .slds-modal__container
       header.slds-modal__header(:class="{ 'slds-modal__header_empty': title == null }")
-        button.slds-button.slds-button_icon.slds-modal__close.slds-button_icon-inverse(title="Close" @click="$listeners.clickClose()")
+        button.slds-button.slds-button_icon.slds-modal__close.slds-button_icon-inverse(
+          v-if="$listeners.clickClose != null"
+          title="Close"
+          @click="$listeners.clickClose()"
+        )
           svg.slds-button__icon.slds-button__icon_large(aria-hidden="true")
             use(:xlink:href="close_icon_url")
           span.slds-assistive-text Close
@@ -31,8 +35,8 @@ div
         v-if="$listeners.clickCancel != null || $listeners.clickOK != null"
         :class="{ 'slds-modal__footer_directional': footerDirectional }"
       )
-        vlds-button(type="neutral" @click="$listeners.clickCancel()") Cancel
-        vlds-button(type="brand"  @click="$listeners.clickOK()") Save
+        vlds-button(v-if="$listeners.clickCancel != null" type="neutral" @click="$listeners.clickCancel()") Cancel
+        vlds-button(v-if="$listeners.clickOK != null" type="brand"  @click="$listeners.clickOK()") Save
   .slds-backdrop.slds-backdrop_open
 </template>
 
