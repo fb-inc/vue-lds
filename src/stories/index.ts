@@ -119,7 +119,9 @@ storiesOf('Components', module)
   :footer-directional="footer_directional"
   :size="size"
   @clickClose="clickClose"
+  :label-cancel="label_cancel"
   @clickCancel="clickCancel"
+  :label-ok="label_ok"
   @clickOK="clickOK">
   {{ content }}
 </vlds-modal>`,
@@ -134,6 +136,8 @@ storiesOf('Components', module)
           footer_directional: boolean('footer-directional', false),
           size: sizes === '(none)' ? undefined : sizes,
           content: text('content', 'Content'),
+          label_cancel: text('label-cancel', 'Cancel'),
+          label_ok: text('label-ok', 'Save'),
         }),
         methods: {
           clickClose() {

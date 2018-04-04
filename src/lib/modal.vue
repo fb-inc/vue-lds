@@ -29,8 +29,8 @@ div
         v-if="$listeners.clickCancel != null || $listeners.clickOK != null"
         :class="{ 'slds-modal__footer_directional': footerDirectional }"
       )
-        vlds-button(v-if="$listeners.clickCancel != null" type="neutral" @click="$listeners.clickCancel()") Cancel
-        vlds-button(v-if="$listeners.clickOK != null" type="brand"  @click="$listeners.clickOK()") Save
+        vlds-button(v-if="$listeners.clickCancel != null" type="neutral" @click="$listeners.clickCancel()") {{ labelCancel || 'Cancel' }}
+        vlds-button(v-if="$listeners.clickOK != null" type="brand"  @click="$listeners.clickOK()") {{ labelOk || 'OK' }}
   .slds-backdrop.slds-backdrop_open
 </template>
 
@@ -59,8 +59,14 @@ export default class extends Vue {
   @Prop({ type: Function })
   clickClose: () => void | undefined
 
+  @Prop({ type: String })
+  labelCancel: string | undefined
+
   @Prop({ type: Function })
   clickCancel: () => void | undefined
+
+  @Prop({ type: String })
+  labelOk: string | undefined
 
   @Prop({ type: Function })
   clickOK: () => void | undefined
