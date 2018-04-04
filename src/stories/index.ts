@@ -61,15 +61,39 @@ storiesOf('Components', module)
   .add(
     'Modal',
     withInfo(styles)(() => {
+      const sizes = selectV2(
+        'type',
+        {
+          '(none)': '(none)',
+          medium: 'medium',
+          large: 'large',
+        },
+        '(none)',
+      )
+
       return {
         components: { VldsModal },
         template: `<vlds-modal
   v-if="is_show_modal"
+  :title="title"
+  :taglines="taglines"
+  :footer-directional="footer_directional"
+  :size="size"
   @clickCancel="clickCancel"
   @clickOK="clickOK">
   Modal
 </vlds-modal>`,
-        data: () => ({ is_show_modal: true }),
+        data: () => ({
+          is_show_modal: true,
+          title: text('title', 'Modal Header') || undefined,
+          taglines:
+            text(
+              'taglines',
+              'Here’s a tagline if you need it. It is allowed to extend across mulitple lines, so I’m making up content to show that to you. It is allowed to contain links or be a link.',
+            ) || undefined,
+          footer_directional: boolean('footer-directional', false),
+          size: sizes === '(none)' ? undefined : sizes,
+        }),
         methods: {
           clickCancel() {
             this.is_show_modal = false

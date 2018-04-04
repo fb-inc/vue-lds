@@ -3,7 +3,7 @@
 </style>
 
 <template lang="pug">
-.slds-spinner(:class="{ [`slds-spinner_${size}`]: size != null, [`slds-spinner_brand`]: brand }" role="status")
+.slds-spinner(:class="{ [`slds-spinner_${size}`]: size != null, 'slds-spinner_brand': brand }" role="status")
   span.slds-assistive-text Loading
   .slds-spinner__dot-a
   .slds-spinner__dot-b
