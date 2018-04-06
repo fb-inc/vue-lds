@@ -27,6 +27,10 @@ module.exports = storybook_base_config_ => {
           ],
         },
         { test: /\.(woff|woff2)$/, use: [{ loader: 'url-loader' }] },
+        {
+          test: /\.svg$/,
+          use: [{ loader: 'svg-inline-loader', options: { removingTagAttrs: ['fill'] } }],
+        },
       ],
     },
     resolve: { extensions: ['.js', '.ts'], alias: { vue: 'vue/dist/vue.esm.js' } },

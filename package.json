@@ -22,6 +22,7 @@
     "style-loader": "^0.20.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "svg-inline-loader": "^0.8.0",
     "ts-loader": "^4.1.0",
     "typescript": "^2.8.1",
     "url-loader": "^1.0.1",
@@ -31,7 +32,7 @@
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.5.0",
     "webpack-build-notifier": "^0.1.23",
-    "webpack-cli": "^2.0.13",
+    "webpack-cli": "^2.0.14",
     "webpack-merge": "^4.1.2"
   },
   "files": ["lib", "LICENSE", "package.json", "README.md"],
@@ -50,5 +51,5 @@
     "production": "rm -dfr ./lib && rm -dfr ./docs && yarn build:lib && yarn build:storybook",
     "storybook": "start-storybook -p 8080"
   },
-  "version": "0.1.7"
+  "version": "0.1.8"
 }

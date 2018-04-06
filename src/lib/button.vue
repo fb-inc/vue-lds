@@ -4,13 +4,9 @@
 
 <template lang="pug">
 button.slds-button(:class="{ [`slds-button_${type}`]: type != null }" :disabled="disabled" @click="$listeners.click()")
-  template(v-if="icon != null && !rightIcon")
-    svg.slds-button__icon.slds-button__icon_left(aria-hidden="true")
-      use(:xlink:href="icon")
+  svg.slds-button__icon.slds-button__icon_left(v-if="icon != null && !rightIcon" aria-hidden="true" v-html="icon_data")
   slot
-  template(v-if="icon != null && rightIcon")
-    svg.slds-button__icon.slds-button__icon_right(aria-hidden="true")
-      use(:xlink:href="icon")
+  svg.slds-button__icon.slds-button__icon_right(v-if="icon != null && rightIcon" aria-hidden="true" v-html="icon_data")
 </template>
 
 <script lang="ts">
@@ -29,5 +25,9 @@ export default class extends Vue {
 
   @Prop({ type: Boolean })
   disabled: boolean
+
+  get icon_data() {
+    return require(`@salesforce-ux/design-system/assets/icons/${this.icon}.svg`)
+  }
 }
 </script>

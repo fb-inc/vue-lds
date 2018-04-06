@@ -16,12 +16,11 @@ div
     .slds-modal__container
       header.slds-modal__header(:class="{ 'slds-modal__header_empty': title == null }")
         button.slds-button.slds-button_icon.slds-modal__close.slds-button_icon-inverse(
-          v-if="closeIcon != null && $listeners.clickClose != null"
+          v-if="$listeners.clickClose != null"
           title="Close"
           @click="$listeners.clickClose()"
         )
-          svg.slds-button__icon.slds-button__icon_large(aria-hidden="true")
-            use(:xlink:href="closeIcon")
+          svg.slds-button__icon.slds-button__icon_large(aria-hidden="true" v-html="close_icon")
           span.slds-assistive-text Close
         h2#modal-heading-01.slds-text-heading_medium.slds-hyphenate(v-if="title != null") {{ title }}
         p.slds-m-top_x-small(v-if="taglines != null") {{ taglines }}
@@ -42,6 +41,8 @@ import VldsButton from './button.vue'
 
 @Component({ components: { VldsButton } })
 export default class extends Vue {
+  close_icon = require('@salesforce-ux/design-system/assets/icons/utility/close.svg')
+
   @Prop({ type: String })
   title: string | undefined
 
@@ -53,9 +54,6 @@ export default class extends Vue {
 
   @Prop({ type: String })
   size: string | undefined
-
-  @Prop({ type: String })
-  closeIcon: string | undefined
 
   @Prop({ type: String })
   labelSecondary: string | undefined
