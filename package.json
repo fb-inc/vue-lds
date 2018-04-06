@@ -15,7 +15,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.11",
-    "file-loader": "^1.1.11",
+    "innersvg-polyfill": "^0.0.2",
     "poststylus": "^1.0.0",
     "pug": "^2.0.3",
     "storybook-addon-vue-info": "^0.2.0",
@@ -51,5 +51,5 @@
     "production": "rm -dfr ./lib && rm -dfr ./docs && yarn build:lib && yarn build:storybook",
     "storybook": "start-storybook -p 8080"
   },
-  "version": "0.1.8"
+  "version": "0.1.9"
 }

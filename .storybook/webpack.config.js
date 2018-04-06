@@ -2,6 +2,9 @@ const WebpackMerge = require('webpack-merge')
 const base_config = require('../webpack.config.base')
 
 module.exports = storybook_base_config_ => {
+  storybook_base_config_.entry.manager.push('innersvg-polyfill')
+  storybook_base_config_.entry.preview.push('innersvg-polyfill')
+
   storybook_base_config_.entry.manager = storybook_base_config_.entry.manager.map(path_ =>
     path_.replace(/addons\.js$/, 'addons.ts'),
   )
