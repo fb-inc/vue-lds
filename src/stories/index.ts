@@ -1,9 +1,12 @@
+import { Vue } from 'vue-property-decorator'
 import { storiesOf } from '@storybook/vue'
 import { withInfo } from 'storybook-addon-vue-info'
 import { withKnobs, text, selectV2, boolean } from '@storybook/addon-knobs/vue'
 import { action } from '@storybook/addon-actions'
 
-import { VldsButton, VldsForm, VldsInput, VldsModal, VldsSpinner } from '../lib'
+import Vlds from '../lib'
+
+Vue.use(Vlds)
 
 const styles = { styles: { info: { padding: `${8 * 2.5}px` }, header: { h1: { fontSize: `${8 * 3}px` } } } }
 
@@ -35,7 +38,6 @@ storiesOf('Components', module)
       )
 
       return {
-        components: { VldsButton },
         template: `<vlds-button
   :type="type"
   :icon="icon"
@@ -56,10 +58,56 @@ storiesOf('Components', module)
     }),
   )
   .add(
+    'Button Icon',
+    withInfo(styles)(() => {
+      const icons = selectV2(
+        'icon',
+        {
+          settings: 'utility/settings',
+          warning: 'utility/warning',
+        },
+        'utility/settings',
+      )
+
+      const sizes = selectV2(
+        'size',
+        {
+          '(none)': '(none)',
+          'x-small': 'x-small',
+          small: 'small',
+          large: 'large',
+        },
+        '(none)',
+      )
+
+      const types = selectV2(
+        'type',
+        {
+          '(none)': '(none)',
+          'border-filled': 'border-filled',
+          brand: 'brand',
+          inverse: 'inverse',
+          error: 'error',
+        },
+        '(none)',
+      )
+      return {
+        template: `<vlds-button-icon :icon="icon" :size="size" :title="title" :type="type" :disabled="disabled" @click="click" />`,
+        data: () => ({
+          icon: icons === '(none)' ? undefined : icons,
+          size: sizes === '(none)' ? undefined : sizes,
+          title: text('title', 'Provide description of action'),
+          type: types === '(none)' ? undefined : types,
+          disabled: boolean('disabled', false),
+        }),
+        methods: { click: () => action('click')('click') },
+      }
+    }),
+  )
+  .add(
     'Form',
     withInfo(styles)(() => {
       return {
-        components: { VldsForm },
         template: `<vlds-form :horizontal="horizontal"></vlds-form>`,
         data: () => ({
           horizontal: boolean('horizontal', false),
@@ -80,7 +128,6 @@ storiesOf('Components', module)
         'static',
       )
       return {
-        components: { VldsInput },
         template: `<vlds-input
   :label="label"
   v-model="model"
@@ -98,7 +145,7 @@ storiesOf('Components', module)
     'Modal',
     withInfo(styles)(() => {
       const sizes = selectV2(
-        'type',
+        'size',
         {
           '(none)': '(none)',
           medium: 'medium',
@@ -108,48 +155,31 @@ storiesOf('Components', module)
       )
 
       return {
-        components: { VldsModal },
-        template: `<vlds-modal
-  v-if="is_show_modal"
-  :title="title"
-  :taglines="taglines"
-  :footer-directional="footer_directional"
-  :size="size"
-  :label-secondary="label_secondary"
-  :label-primary="label_primary"
-  @clickBackdrop="clickBackdrop"
-  @clickClose="clickClose"
-  @clickSecondary="clickSecondary"
-  @clickPrimary="clickPrimary">
-  {{ content }}
+        template: `<vlds-modal v-if="is_show_modal" :title="title" :taglines="taglines" :size="size" @clickBackdrop="clickBackdrop" @clickClose="clickClose">
+  <vlds-modal-content>{{ content }}</vlds-modal-content>
+  <vlds-modal-footer v-if="is_show_footer" :footer-directional="footer_directional">
+    <vlds-button type="neutral" @click="clickCancel">Cancel</vlds-button>
+    <vlds-button type="brand" @click="clickDone">Done</vlds-button>
+  </vlds-modal-footer>
 </vlds-modal>`,
         data: () => ({
-          is_show_modal: true,
+          is_show_modal: boolean('is_show_modal', true),
           title: text('title', 'Modal Header') || undefined,
           taglines:
             text(
               'taglines',
-              'Here’s a tagline if you need it. It is allowed to extend across mulitple lines, so I’m making up content to show that to you. It is allowed to contain links or be a link.',
+              'Here’s a tagline if you need it. It is allowed to extend across mulitple lines, so I’m making up content to show that to you. It is allowed to <a>contain links or be a link</a>.',
             ) || undefined,
+          is_show_footer: boolean('is_show_footer', true),
           footer_directional: boolean('footer-directional', false),
           size: sizes === '(none)' ? undefined : sizes,
-          label_secondary: text('label-secondary', 'Cancel'),
-          label_primary: text('label-primary', 'Save'),
           content: text('content', 'Content'),
         }),
         methods: {
-          clickBackdrop() {
-            this.is_show_modal = false
-          },
-          clickClose() {
-            this.is_show_modal = false
-          },
-          clickSecondary() {
-            this.is_show_modal = false
-          },
-          clickPrimary() {
-            this.is_show_modal = false
-          },
+          clickBackdrop: () => {},
+          clickClose: () => {},
+          clickCancel: () => {},
+          clickDone: () => {},
         },
       }
     }),
@@ -169,7 +199,6 @@ storiesOf('Components', module)
         'medium',
       )
       return {
-        components: { VldsSpinner },
         template: `<vlds-spinner :size="size" :brand="brand"></vlds-spinner>`,
         data: () => ({ size: sizes, brand: boolean('brand', false) }),
       }
