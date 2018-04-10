@@ -64,6 +64,8 @@ storiesOf('Components', module)
         'icon',
         {
           settings: 'utility/settings',
+          search: 'utility/search',
+          like: 'utility/like',
           warning: 'utility/warning',
         },
         'utility/settings',
@@ -85,19 +87,23 @@ storiesOf('Components', module)
         {
           '(none)': '(none)',
           'border-filled': 'border-filled',
+          'bordered-inverse': 'bordered-inverse',
+          border: 'border',
           brand: 'brand',
           inverse: 'inverse',
+          transparent: 'transparent',
           error: 'error',
         },
         '(none)',
       )
       return {
-        template: `<vlds-button-icon :icon="icon" :size="size" :title="title" :type="type" :disabled="disabled" @click="click" />`,
+        template: `<vlds-button-icon :icon="icon" :size="size" :title="title" :type="type" :dropdown="dropdown" :disabled="disabled" @click="click" />`,
         data: () => ({
           icon: icons === '(none)' ? undefined : icons,
           size: sizes === '(none)' ? undefined : sizes,
           title: text('title', 'Provide description of action'),
           type: types === '(none)' ? undefined : types,
+          dropdown: boolean('dropdown', false),
           disabled: boolean('disabled', false),
         }),
         methods: { click: () => action('click')('click') },

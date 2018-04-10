@@ -7,7 +7,6 @@
     "@storybook/addon-knobs": "^3.4.0",
     "@storybook/vue": "^4.0.0-alpha.1",
     "@types/storybook__addon-actions": "^3.0.3",
-    "@types/storybook__addon-knobs": "^3.2.3",
     "@types/storybook__vue": "^3.3.0",
     "autoprefixer": "^8.2.0",
     "babel-core": "^6.26.0",
