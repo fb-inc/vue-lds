@@ -1,6 +1,4 @@
-
 <style lang="stylus" scoped>
-
 @import '~@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css'
 </style>
 

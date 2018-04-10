@@ -16,7 +16,8 @@ div
         vlds-button-icon(icon="utility/close" size="large" title="Close" type="modal" @click="$listeners.clickClose()")
         h2.slds-text-heading_medium.slds-hyphenate(v-if="title != null") {{ title }}
         p.slds-m-top_x-small(v-if="taglines != null" v-html="taglines")
-      slot
+      .slds-modal__content.slds-p-around_medium: slot(name="content")
+      footer.slds-modal__footer(v-if="$slots.footer != null" :class="{ 'slds-modal__footer_directional': footerDirectional }"): slot(name="footer")
   .slds-backdrop.slds-backdrop_open
 </template>
 
@@ -35,6 +36,9 @@ export default class extends Vue {
 
   @Prop({ type: String })
   size: string | undefined
+
+  @Prop({ type: Boolean })
+  footerDirectional: boolean
 
   @Prop({ type: Function })
   clickBackdrop: () => void | undefined

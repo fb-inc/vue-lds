@@ -17,12 +17,19 @@ export default {
     )
 
     return {
-      template: `<vlds-modal v-if="is_show_modal" :title="title" :taglines="taglines" :size="size" @clickBackdrop="click" @clickClose="click">
-  <vlds-modal-content>{{ content }}</vlds-modal-content>
-  <vlds-modal-footer v-if="is_show_footer" :footer-directional="footer_directional">
+      template: `<vlds-modal
+  v-if="is_show_modal"
+  :title="title"
+  :taglines="taglines"
+  :size="size"
+  :footer-directional="footer_directional"
+  @clickBackdrop="click"
+  @clickClose="click">
+  <template slot="content">{{ content }}</template>
+  <template slot="footer" v-if="is_show_footer">
     <vlds-button type="neutral" @click="click">Cancel</vlds-button>
     <vlds-button type="brand" @click="click">Done</vlds-button>
-  </vlds-modal-footer>
+  </template>
 </vlds-modal>`,
       data: () => ({
         is_show_modal: boolean('is_show_modal', true),
