@@ -3,7 +3,7 @@
 </style>
 
 <template lang="pug">
-.slds-spinner(:class="{ [`slds-spinner_${size}`]: size != null, 'slds-spinner_brand': brand }" role="status")
+.slds-spinner(:class="{ [`slds-spinner_${size}`]: size != null, [`slds-spinner_${type}`]: type != null, 'slds-spinner_delayed': delayed }" role="status")
   span.slds-assistive-text Loading
   .slds-spinner__dot-a
   .slds-spinner__dot-b
@@ -15,9 +15,12 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 @Component({})
 export default class extends Vue {
   @Prop({ type: String })
+  type: string | undefined
+
+  @Prop({ type: String })
   size: string | undefined
 
   @Prop({ type: Boolean })
-  brand: boolean
+  delayed: boolean
 }
 </script>

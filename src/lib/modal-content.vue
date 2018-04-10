@@ -3,7 +3,7 @@
 </style>
 
 <template lang="pug">
-#modal-content-id-1.slds-modal__content.slds-p-around_medium: slot
+.slds-modal__content.slds-p-around_medium: slot
 </template>
 
 <script lang="ts">

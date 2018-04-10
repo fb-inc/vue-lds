@@ -8,15 +8,13 @@ div
     :class="{ [`slds-modal_${size}`]: size != null }"
     role="dialog"
     tabindex="-1"
-    :aria-labelledby="title == null ? undefined : 'modal-heading-01'"
     aria-modal="true"
-    aria-describedby="modal-content-id-1"
     @click="clickSection"
   )
     .slds-modal__container
       header.slds-modal__header(:class="{ 'slds-modal__header_empty': title == null }")
-        vlds-button-icon(icon="utility/close" size="large" title="Close" type="modal")
-        h2#modal-heading-01.slds-text-heading_medium.slds-hyphenate(v-if="title != null") {{ title }}
+        vlds-button-icon(icon="utility/close" size="large" title="Close" type="modal" @click="$listeners.clickClose()")
+        h2.slds-text-heading_medium.slds-hyphenate(v-if="title != null") {{ title }}
         p.slds-m-top_x-small(v-if="taglines != null" v-html="taglines")
       slot
   .slds-backdrop.slds-backdrop_open
@@ -45,8 +43,9 @@ export default class extends Vue {
   clickClose: () => void | undefined
 
   clickSection(_: MouseEvent) {
+    const classes = (_.target as Element).className.split(' ')
     if (
-      (_.target as Element).className.split(' ').find(_ => _ === 'slds-modal') &&
+      (classes.find(_ => _ === 'slds-modal') || classes.find(_ => _ === 'slds-modal__container')) &&
       this.$listeners.clickBackdrop != null
     ) {
       ;(this.$listeners.clickBackdrop as Function)()
