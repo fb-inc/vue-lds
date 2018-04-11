@@ -3,8 +3,8 @@
   "description": "Salesforce's Lightning Design System wrapped in Vue.js.",
   "devDependencies": {
     "@salesforce-ux/design-system": "^2.5.2",
-    "@storybook/addon-actions": "^3.4.0",
-    "@storybook/addon-knobs": "^3.4.0",
+    "@storybook/addon-actions": "^3.4.1",
+    "@storybook/addon-knobs": "^3.4.1",
     "@storybook/vue": "^4.0.0-alpha.1",
     "@types/storybook__addon-actions": "^3.0.3",
     "@types/storybook__vue": "^3.3.0",
@@ -50,5 +50,5 @@
     "production": "rm -dfr ./lib && rm -dfr ./docs && yarn build:lib && yarn build:storybook",
     "storybook": "start-storybook -p 8080"
   },
-  "version": "0.1.11"
+  "version": "1.0.0-alpha.7"
 }
