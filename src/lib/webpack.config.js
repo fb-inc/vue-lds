@@ -15,7 +15,7 @@ base_config.module.rules = base_config.module.rules.map(r_ => {
 module.exports = WebpackMerge(base_config, {
   context: `${__dirname}`,
   devtool: false,
-  entry: { index: ['./index.ts', 'innersvg-polyfill'] },
+  entry: { index: ['./index.ts'] },
   mode: 'development',
   output: { path: `${__dirname}/../../lib`, filename: '[name].js', libraryTarget: 'umd' },
   plugins: [new Webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } })],

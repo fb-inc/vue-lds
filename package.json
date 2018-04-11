@@ -50,5 +50,5 @@
     "production": "rm -dfr ./lib && rm -dfr ./docs && yarn build:lib && yarn build:storybook",
     "storybook": "start-storybook -p 8080"
   },
-  "version": "1.0.0-alpha.7"
+  "version": "1.0.0-alpha.14"
 }

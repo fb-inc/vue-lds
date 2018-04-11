@@ -23,4 +23,9 @@ import Vue from 'vue'
 import VueLDS from 'vue-lds'
 
 Vue.use(VueLDS)
+
+new Vue({
+  el: '#app',
+  template: '<vlds-button type="neutral" icon="utility/edit">Button</vlds-button>',
+})
 ```
