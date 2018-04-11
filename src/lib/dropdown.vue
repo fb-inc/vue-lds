@@ -7,7 +7,7 @@
 <template lang="pug">
 .slds-dropdown-trigger.slds-dropdown-trigger_click(:class="{ 'slds-is-open': is_open }")
   vlds-button-icon(type="border-filled" icon="utility/down" :title="title" @click="clickButton")
-  .slds-dropdown.slds-dropdown_left(:class="{ [`slds-dropdown_length-${length}`]: length != null }")
+  .slds-dropdown.slds-dropdown_left(:class="[dropdown_length]")
     ul.slds-dropdown__list(role="menu")
       template(v-for="i_ in items")
         li.slds-has-divider_top-space(v-if="i_.label == null" role="separator")
@@ -41,13 +41,21 @@ export default class extends Vue {
   title: string | undefined
 
   @Prop({ type: Array })
-  items: ({ label: string; value?: any } | null)[]
+  items: ({ left_icon?: string; right_icon?: string; label: string | null; value?: any } | null)[]
 
   @Prop({ type: String })
   scroll: string | undefined
 
+  mounted() {
+    onclick = () => {
+      if (this.is_open) this.is_open = false
+    }
+  }
+
   clickButton() {
-    this.is_open = !this.is_open
+    setTimeout(() => {
+      this.is_open = !this.is_open
+    })
   }
 
   clickItem({ value_ }) {
@@ -59,11 +67,20 @@ export default class extends Vue {
     return require(`@salesforce-ux/design-system/assets/icons/${name_}.svg`)
   }
 
-  get length() {
-    if (this.scroll === 'large') return 10
-    if (this.scroll === 'medium') return 7
-    if (this.scroll === 'small') return 5
-    return null
+  get dropdown_length() {
+    let length: number | undefined
+    if (this.scroll === 'large') length = 10
+    else if (this.scroll === 'medium') length = 7
+    else if (this.scroll === 'small') length = 5
+
+    if (length == null) return null
+
+    const has_icon = this.items.some(_ => {
+      if (_ == null) return false
+      return _.left_icon != null || _.right_icon != null
+    })
+
+    return `slds-dropdown_length-${has_icon ? 'with-icon-' : ''}${length}`
   }
 }
 </script>
